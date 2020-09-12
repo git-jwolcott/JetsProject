@@ -1,0 +1,5 @@
+StandardJet,Beechcraft,Premier,523,950,350000
+StandardJet,Learjet,60,522,2773,3500000
+CargoPlane,Airbus,A300,629,7767,42000000
+CargoPlane,Boeing,747 Dreamlifter,629,4800,1000000000
+FighterJet,McDonnell Douglas,F/A-18 Super Hornet,1381,1253,66000000
