@@ -31,7 +31,7 @@ Create a fleet of jets from a file. Via a menu, allow a user to access informati
 * List interface
 
 ### How to Run
-Make your selection from the choices presented in the menu by selecting the associated number.
+Make your selection from the choices presented in the menu.
 
   1. List all jets in the fleet.
   2. Fly all jets in the fleet.
