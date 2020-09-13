@@ -1,13 +1,14 @@
 package com.skilldistillery.jet;
 
-public class FighterJet extends Jet implements CombatReady{
+public class FighterJet extends Jet implements CombatReady {
 
-	public FighterJet(String make, String model, double speed, int range, long price) {
-		super(make, model, speed, range, price);
+	public FighterJet(String name, String make, String model, double speed, int range, long price) {
+		super(name, make, model, speed, range, price);
 	}
 
 	@Override
 	public void fight() {
+		System.out.println("I feel the need -- the need for speed!");
 		System.out.println("Fighting....");
 	}
 
@@ -20,7 +21,4 @@ public class FighterJet extends Jet implements CombatReady{
 		return builder.toString();
 	}
 
-
-
-	
 }

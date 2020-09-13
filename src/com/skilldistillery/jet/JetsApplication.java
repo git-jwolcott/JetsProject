@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +24,7 @@ public class JetsApplication {
 	private void run(Scanner userInput) {
 		List<Jet> jets = new ArrayList<>();
 //		jets.addAll(
-				parseFile(jets);
+		parseFile(jets);
 		showMenu(userInput, jets);
 	}
 
@@ -39,14 +38,14 @@ public class JetsApplication {
 			while ((line = bufIn.readLine()) != null) {
 				String[] fields = line.split(",");
 				if (fields[0].contains("StandardJet")) {
-					jets.add(new StandardJet(fields[1], fields[2], Double.parseDouble(fields[3]),
-							Integer.parseInt(fields[4]), Long.parseLong(fields[5])));
+					jets.add(new StandardJet(fields[1], fields[2], fields[3], Double.parseDouble(fields[4]),
+							Integer.parseInt(fields[5]), Long.parseLong(fields[6])));
 				} else if (fields[0].contains("CargoPlane")) {
-					jets.add(new CargoPlane(fields[1], fields[2], Double.parseDouble(fields[3]),
-							Integer.parseInt(fields[4]), Long.parseLong(fields[5])));
+					jets.add(new CargoPlane(fields[1], fields[2], fields[3], Double.parseDouble(fields[4]),
+							Integer.parseInt(fields[5]), Long.parseLong(fields[6])));
 				} else if (fields[0].contains("FighterJet")) {
-					jets.add(new FighterJet(fields[1], fields[2], Double.parseDouble(fields[3]),
-							Integer.parseInt(fields[4]), Long.parseLong(fields[5])));
+					jets.add(new FighterJet(fields[1], fields[2], fields[3], Double.parseDouble(fields[4]),
+							Integer.parseInt(fields[5]), Long.parseLong(fields[6])));
 				}
 			}
 		} catch (IOException e) {
@@ -81,94 +80,63 @@ public class JetsApplication {
 
 	// menu selection action
 	private void menuAction(Scanner userInput, List<Jet> jets) {
-		String menuSelection = userInput.next();
+		int menuSelection = Integer.parseInt(userInput.nextLine());
 		boolean keepGoing = true;
 		while (keepGoing) {
 			switch (menuSelection) {
-			case "1":
+			// show all jets in fleet
+			case 1:
 				// get all jets
-				userInput.nextLine();
 				aField.getjList();
 				showMenu(userInput, jets);
 				break;
-			case "2":
-				userInput.nextLine();
-				for (Jet jet : jets) {
-					jet.fly(jet);
-				}
+			// fly all jets
+			case 2:
+				aField.flyJets();
 				showMenu(userInput, jets);
 				break;
-			case "3":
-				userInput.nextLine();
-				getFastestJet(userInput, jets);
-				break;
-			case "4":
-				userInput.nextLine();
-				getLongestRangeJet(userInput, jets);
-				break;
-			case "5":
-				userInput.nextLine();
-				for (Jet jet : jets) {
-					if (jet.getClass().getSimpleName().equals("CargoPlane")) {
-						((CargoPlane) jet).loadCargo();
-					}
-				}
+			// find fastest jet in fleet
+			case 3:
+				aField.getFastestJet(jets);
 				showMenu(userInput, jets);
 				break;
-			case "6":
-				userInput.nextLine();
-				for (Jet jet : jets) {
-					if (jet.getClass().getSimpleName().equals("FighterJet")) {
-						((FighterJet) jet).fight();
-					}
-				}
+			// find jet with longest range
+			case 4:
+				aField.getLongestRangeJet(jets);
 				showMenu(userInput, jets);
 				break;
-			case "7":
-				userInput.nextLine();
+			// load all cargo planes
+			case 5:
+				// find the cargo planes
+				aField.loadCargoPlanes(jets);
+				showMenu(userInput, jets);
+				break;
+			// send all fighter jets into action
+			case 6:
+				// find the fighter jets
+				aField.sendFighterJetsIntoAction(jets);
+				showMenu(userInput, jets);
+				break;
+			// add a jet to the fleet and air field
+			case 7:
 				addJet(userInput, jets);
 				break;
-			case "8":
-				userInput.nextLine();
-				removeJet(userInput, jets);
+			// remove a jet from the fleet and the air field
+			case 8:
+				aField.removeJet(userInput, jets);
+				showMenu(userInput, jets);
 				break;
-			case "9":
-				userInput.nextLine();
+			// quit the application
+			case 9:
 				System.out.println("You opted to quit. Have a nice day! Goodbye!");
 				keepGoing = false;
 				System.exit(0);
 				break;
 			default:
-				System.out.println("Invalid selection. Please enter a number 1 - 4.");
+				System.out.println("Invalid selection. Please enter a number 1 - 9.");
 				break;
 			}
 		}
-	}
-
-	private void getFastestJet(Scanner userInput, List<Jet> jets) {
-		double fastestSpeed = 0;
-		String jDetail = null;
-			for (Jet jet : jets) {
-				if (jet.getSpeed() > fastestSpeed) {
-					fastestSpeed = jet.getSpeed();
-					jDetail = jet.toString();
-				}
-			}
-		System.out.println(jDetail + " is the fastest jet.");
-		showMenu(userInput, jets);
-	}
-
-	private void getLongestRangeJet(Scanner userInput, List<Jet> jets) {
-		int farthestRange = 0;
-		String jDetail = null;
-			for (Jet jet : jets) {
-				if (jet.getRange() > farthestRange) {
-					farthestRange = jet.getRange();
-					jDetail = jet.toString();
-				}
-			}
-		System.out.println(jDetail + " is the jet with the longest flight range.");
-		showMenu(userInput, jets);
 	}
 
 	private void addJet(Scanner userInput, List<Jet> jets) {
@@ -191,98 +159,55 @@ public class JetsApplication {
 		getNewJetDetails(userInput, jets);
 	}
 
-	private void jetTypeMenuAction(Scanner userInput, int jetType, String make, String model, double speed, int range, long price, List<Jet> jets ) {
-			switch (jetType) {
-			case 1:
-				// create a standard jet
-				Jet j = new StandardJet(make, model, speed, range, price);
-				aField.addJets(j);
-				showMenu(userInput, jets);
-				break;
-			case 2:
-				Jet j1 =new CargoPlane(make, model, speed, range, price);
-				aField.addJets(j1);
-				showMenu(userInput, jets);
-				break;
-			case 3:
-				Jet j2 = new FighterJet(make, model, speed, range, price);
-				aField.addJets(j2);
-				showMenu(userInput, jets);
-				break;
-			default:
-				break;
-			}
-	}
-	
 	private void getNewJetDetails(Scanner userInput, List<Jet> jets) {
-		int jetType = userInput.nextInt();
+		int jetType = Integer.parseInt(userInput.nextLine());
 		if (jetType == 1 || jetType == 2 || jetType == 3) {
-		String make;
-		String model;
-		double speed;
-		int range;
-		long price;
-		
-		System.out.println("Enter the jet's make: ");
-		make = userInput.nextLine();
-		userInput.nextLine();
-		System.out.println("Enter the jet's model: ");
-		model = userInput.nextLine();
-		System.out.println("Enter the jet's speed: ");
-		speed = userInput.nextDouble();
-		System.out.println("Enter the jet's range: ");
-		range = userInput.nextInt();
-		System.out.println("Enter the jet's price: ");
-		price = userInput.nextLong();
-		
-		jetTypeMenuAction(userInput, jetType, make, model, speed, range, price, jets);
-		}
-		else {
+
+			System.out.println("Enter the jet's name: ");
+			String name = userInput.nextLine();
+			System.out.println("Enter the jet's make: ");
+			String make = userInput.nextLine();
+			System.out.println("Enter the jet's model: ");
+			String model = userInput.nextLine();
+			System.out.println("Enter the jet's speed: ");
+			double speed = userInput.nextDouble();
+			System.out.println("Enter the jet's range: ");
+			int range = userInput.nextInt();
+			System.out.println("Enter the jet's price: ");
+			long price = userInput.nextLong();
+
+			jetTypeMenuAction(userInput, jetType, name, make, model, speed, range, price, jets);
+		} else {
 			System.out.println("Invalid selection. Please enter a number 1 - 3.");
-			showJetTypeMenu(userInput ,jets);
+			showJetTypeMenu(userInput, jets);
 		}
 	}
 
-	private void removeJet(Scanner userInput, List<Jet> jets) {
-		System.out.println("You selected to remove a jet from the fleet. Here's the fleet: ");
-		System.out.println();
-		System.out.println("======== Fleet ========");
-		System.out.println("|                    ");
-		for (Jet jet : jets) {
-			System.out.println("|  " + jet + "   ");
-			System.out.println();
+	private void jetTypeMenuAction(Scanner userInput, int jetType, String name, String make, String model, double speed,
+			int range, long price, List<Jet> jets) {
+		switch (jetType) {
+		case 1:
+			// create a standard jet
+			Jet j = new StandardJet(name, make, model, speed, range, price);
+			aField.addNewJet(j);
+			userInput.nextLine();
+			showMenu(userInput, jets);
+			break;
+		case 2:
+			Jet j1 = new CargoPlane(name, make, model, speed, range, price);
+			aField.addNewJet(j1);
+			userInput.nextLine();
+			showMenu(userInput, jets);
+			break;
+		case 3:
+			Jet j2 = new FighterJet(name, make, model, speed, range, price);
+			aField.addNewJet(j2);
+			userInput.nextLine();
+			showMenu(userInput, jets);
+			break;
+		default:
+			break;
 		}
-		System.out.println("|                    ");
-		System.out.println("======================");
-		System.out.println();
-		System.out.print("Which jet would you like to remove from the fleet? Enter the appropriate jetID: ");
-		int jetID = userInput.nextInt();
-		
-//		for (Jet jet : jets) {
-//			if(jet.getJetID() == jetID) {
-//				jets.remove(jet);
-//				aField.removeJet(jet);
-//			}
-//		}
-//		Jet[] jArr = (Jet[]) jets.toArray();
-//		for (Jet jet : jArr) {
-//			if(((Jet) jet).getJetID() == jetID) {
-////				Jet j = new Jet(jet.getJetID(), jet.getMake(), jet.getModel(), jet.getSpeed(), jet.getRange(), jet.getPrice());
-//				jArr.remove(jet);
-//			}
-//			
-//		}{
-//		}
-//		
-		Iterator<Jet> it = jets.iterator();
-		while(it.hasNext()) {
-			Jet j = it.next();
-			if(j.getJetID() == jetID) {
-				it.remove();
-				aField.removeJet(j);
-			}
-		}
-		showMenu(userInput, jets);		
 	}
-	
+
 }

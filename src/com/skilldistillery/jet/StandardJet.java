@@ -2,8 +2,8 @@ package com.skilldistillery.jet;
 
 public class StandardJet extends Jet {
 
-	public StandardJet(String make, String model, double speed, int range, long price) {
-		super(make, model, speed, range, price);
+	public StandardJet(String name, String make, String model, double speed, int range, long price) {
+		super(name, make, model, speed, range, price);
 	}
 
 	@Override
@@ -14,6 +14,5 @@ public class StandardJet extends Jet {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

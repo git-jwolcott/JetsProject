@@ -1,7 +1,11 @@
 package com.skilldistillery.jet;
 
+import java.util.List;
+import java.util.Scanner;
+
 public abstract class Jet {
 	private int jetID = 0;
+	private String name;
 	private String make;
 	private String model;
 	private double speed;
@@ -10,7 +14,8 @@ public abstract class Jet {
 
 	private static int jetIDTracker = 0;
 
-	public Jet(String make, String model, double speed, int range, long price) {
+	public Jet(String name, String make, String model, double speed, int range, long price) {
+		this.name = name;
 		this.make = make;
 		this.model = model;
 		this.speed = speed;
@@ -23,7 +28,8 @@ public abstract class Jet {
 	}
 
 	public void fly(Jet j) {
-		System.out.println("This jet " + j + " can fly for " + String.format("%.2f", range / speed) + " hours until empty.");
+		System.out.println(
+				"This jet " + j + " can fly for " + String.format("%.2f", range / speed) + " hours until empty.");
 	}
 
 	public double getSpeedInMach(double mph) {
@@ -34,10 +40,14 @@ public abstract class Jet {
 		return jetID;
 	}
 
-//	public void setJetID(int) {
-//		
-//	}
-	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getMake() {
 		return make;
 	}
@@ -79,55 +89,12 @@ public abstract class Jet {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + jetID;
-		result = prime * result + ((make == null) ? 0 : make.hashCode());
-		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + (int) (price ^ (price >>> 32));
-		result = prime * result + range;
-		long temp;
-		temp = Double.doubleToLongBits(speed);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Jet other = (Jet) obj;
-		if (jetID != other.jetID)
-			return false;
-		if (make == null) {
-			if (other.make != null)
-				return false;
-		} else if (!make.equals(other.make))
-			return false;
-		if (model == null) {
-			if (other.model != null)
-				return false;
-		} else if (!model.equals(other.model))
-			return false;
-		if (price != other.price)
-			return false;
-		if (range != other.range)
-			return false;
-		if (Double.doubleToLongBits(speed) != Double.doubleToLongBits(other.speed))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[jetID=");
+		builder.append("Jet [jetID=");
 		builder.append(jetID);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append(", make=");
 		builder.append(make);
 		builder.append(", model=");
@@ -141,4 +108,5 @@ public abstract class Jet {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
