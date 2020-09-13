@@ -31,13 +31,14 @@ Create a fleet of jets from a file. Via a menu, allow a user to access informati
 * List interface
 
 ### How to Run
-Make your selection from the choices presented in the menu.
-  1 - List all jets in the fleet.
-  2 - Fly all jets in the fleet.
-  3 - View the fastest jet in the fleet.
-  4 - View the jet with the longest range.
-  5 - Load cargo into all CargoJets.
-  6 - Send all FighterJets into action.
-  7 - Add a jet to the fleet and to the air field.
-  8 - Remove a jet from the fleet as well as the air field.
-  9 - Quit the program.
+Make your selection from the choices presented in the menu by selecting the associated number.
+
+  1. List all jets in the fleet.
+  2. Fly all jets in the fleet.
+  3. View the fastest jet in the fleet.
+  4. View the jet with the longest range.
+  5. Load cargo into all CargoJets.
+  6. Send all FighterJets into action.
+  7. Add a jet to the fleet and to the air field.
+  8. Remove a jet from the fleet as well as the air field.
+  9. Quit the program.
