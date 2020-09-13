@@ -1,29 +1,43 @@
 package com.skilldistillery.jet;
 
 public abstract class Jet {
+	private int jetID = 0;
 	private String make;
 	private String model;
 	private double speed;
 	private int range;
 	private long price;
-	
+
+	private static int jetIDTracker = 0;
+
 	public Jet(String make, String model, double speed, int range, long price) {
 		this.make = make;
 		this.model = model;
 		this.speed = speed;
 		this.range = range;
 		this.price = price;
+		this.jetID = jetIDTracker;
+
+		// increment jetIDTracker
+		jetIDTracker++;
 	}
-	
-	 public void fly(Jet j) {
-			System.out.println(j);
-			System.out.println("This jet " + j + " can fly for " + String.format("%.2f",range/speed) + " hours until empty.");
-	 }
-	
+
+	public void fly(Jet j) {
+		System.out.println("This jet " + j + " can fly for " + String.format("%.2f", range / speed) + " hours until empty.");
+	}
+
 	public double getSpeedInMach(double mph) {
 		return mph * 0.006517;
 	}
 
+	public int getJetID() {
+		return jetID;
+	}
+
+//	public void setJetID(int) {
+//		
+//	}
+	
 	public String getMake() {
 		return make;
 	}
@@ -68,6 +82,7 @@ public abstract class Jet {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + jetID;
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		result = prime * result + (int) (price ^ (price >>> 32));
@@ -87,6 +102,8 @@ public abstract class Jet {
 		if (getClass() != obj.getClass())
 			return false;
 		Jet other = (Jet) obj;
+		if (jetID != other.jetID)
+			return false;
 		if (make == null) {
 			if (other.make != null)
 				return false;
@@ -109,7 +126,9 @@ public abstract class Jet {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Jet [make=");
+		builder.append("[jetID=");
+		builder.append(jetID);
+		builder.append(", make=");
 		builder.append(make);
 		builder.append(", model=");
 		builder.append(model);
@@ -122,5 +141,4 @@ public abstract class Jet {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	}
+}

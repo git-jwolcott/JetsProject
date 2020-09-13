@@ -14,11 +14,13 @@ public class FighterJet extends Jet implements CombatReady{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FighterJet [toString()=");
+		builder.append("FighterJet  = ");
 		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 
 	
 }

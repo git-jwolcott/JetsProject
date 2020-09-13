@@ -9,7 +9,7 @@ public class StandardJet extends Jet {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("StandardJet [toString()=");
+		builder.append("StandardJet = ");
 		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();

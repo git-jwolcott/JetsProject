@@ -4,8 +4,6 @@ import java.util.*;
 
 public class AirField {
 	//create local variables
-	//max number of jets allowed in the airfield
-//	private static final int MAX_NUMBER_OF_JETS = 20;
 	//list to hold which jets are parked in the Air Field
 	List<Jet> jList = new ArrayList<>();
 	
@@ -13,10 +11,12 @@ public class AirField {
 		jList = jets;
 	}
 
-	public void addJets(List<Jet> jets) {
-		for (Jet jet : jets) {
-			jList.add(jet);
+	public void addJets(Jet j) {
+			jList.add(j);
 		}
+	
+	public void removeJet(Jet j) {
+		jList.remove(j);
 	}
 
 	public List<Jet> getjList() {

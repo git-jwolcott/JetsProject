@@ -13,7 +13,7 @@ public class CargoPlane extends Jet implements CargoCarrier{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CargoPlane [toString()=");
+		builder.append("CargoPlane  = ");
 		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
